@@ -1,8 +1,8 @@
 # IPPanel Laravel Notification Channel
-
 [![Packagist Downloads](https://img.shields.io/packagist/dt/mirvan/ippanel?style=for-the-badge)](https://packagist.org/packages/mirvan/ippanel)
 [![Packagist Version](https://img.shields.io/packagist/v/mirvan/ippanel?style=for-the-badge)](https://packagist.org/packages/mirvan/ippanel)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge)](LICENSE.md)
+###[راهنمای فارسی](README.fa.md)
 
 ## Contents
 
