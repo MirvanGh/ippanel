@@ -15,24 +15,21 @@ class IPPanelServiceProvider extends ServiceProvider
         $this->app->when(IPPanelChannel::class)
             ->needs(IPPanel::class)
             ->give(function () {
-                if (is_null($productToken = config('services.ippanel.api_key'))) {
+                if (is_null(config('services.ippanel.api_key'))) {
                     throw InvalidConfiguration::configurationNotSet();
                 }
-
-                return new IPPanel($productToken);
+                return new IPPanel();
             });
     }
 
     public function register()
     {
         $this->app->singleton('IPPanel', function ($app) {
-            if (is_null($productToken = config('services.ippanel.api_key'))) {
+            if (is_null(config('services.ippanel.api_key')))
                 throw InvalidConfiguration::configurationNotSet();
-            }
 
-            return new IPPanel($productToken);
+            return new IPPanel();
         });
-
     }
 
     /**

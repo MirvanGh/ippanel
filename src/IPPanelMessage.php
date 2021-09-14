@@ -78,7 +78,7 @@ class IPPanelMessage
      */
     public function reference($reference)
     {
-        if (empty($reference) || strlen($reference) > 32 || ! ctype_alnum($reference)) {
+        if (empty($reference) || strlen($reference) > 32 ) {
             throw InvalidMessage::invalidReference($reference);
         }
 
