@@ -1,19 +1,20 @@
 {
-    "name": "laravel-notification-channels/:package_name",
-    "description": ":package_description",
-    "homepage": "https://github.com/laravel-notification-channels/:package_name",
+    "name": "mirvan/ippanel",
+    "description": "laravel notification channel for ippanel",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
-            "homepage": ":author_website",
-            "role": "Developer"
+            "name": "MirVan",
+            "email": "me@mirvan.ir",
+            "homepage": "https://mirvan.ir"
         }
     ],
+    "homepage": "https://github.com/mirvangh/ippanel",
+    "keywords": ["Laravel", "Laravel Notification Channel","IPPanel"],
     "require": {
         "php": ">=7.2",
         "illuminate/notifications": "~6.0 || ~7.0 || ~8.0",
+        "ippanel/php-rest-sdk": "^1.0",
         "illuminate/support": "~6.0 || ~7.0 || ~8.0"
     },
     "require-dev": {
@@ -22,19 +23,17 @@
     },
     "autoload": {
         "psr-4": {
-            "NotificationChannels\\:channel_namespace\\": "src"
+            "Mirvan\\IPPanel\\": "src/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "NotificationChannels\\:channel_namespace\\Test\\": "tests"
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mirvan\\IPPanel\\IPPanelServiceProvider"
+            ],
+            "aliases": {
+                "IPPanel": "Mirvan\\IPPanel\\Facades\\IPPanel"
+            }
         }
-    },
-    "scripts": {
-        "test": "phpunit",
-        "test:coverage": "phpunit --coverage-text --coverage-clover=coverage.clover"
-    },
-    "config": {
-        "sort-packages": true
     }
 }

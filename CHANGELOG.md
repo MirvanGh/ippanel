@@ -1,7 +1,7 @@
 # Changelog
 
-All notable changes to `:package_name` will be documented in this file
+Create first version of ippanel notification (for fun)
 
-## 1.0.0 - 201X-XX-XX
+## 1.0.0 - 2021-09-13
 
 - initial release

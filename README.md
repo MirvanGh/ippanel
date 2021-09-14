@@ -1,33 +1,16 @@
-Please see [this repo](https://github.com/laravel-notification-channels/channels) for instructions on how to submit a channel proposal.
+# IPPanel Laravel Notification Channel
 
-# A Boilerplate repo for contributions
-
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-notification-channels/:package_name.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/:package_name)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/laravel-notification-channels/:package_name/master.svg?style=flat-square)](https://travis-ci.org/laravel-notification-channels/:package_name)
-[![StyleCI](https://styleci.io/repos/:style_ci_id/shield)](https://styleci.io/repos/:style_ci_id)
-[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/:sensio_labs_id.svg?style=flat-square)](https://insight.sensiolabs.com/projects/:sensio_labs_id)
-[![Quality Score](https://img.shields.io/scrutinizer/g/laravel-notification-channels/:package_name.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/:package_name)
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/laravel-notification-channels/:package_name/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/:package_name/?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/:package_name.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/:package_name)
-
-This package makes it easy to send notifications using [:service_name](link to service) with Laravel 5.5+, 6.x and 7.x
-
-**Note:** Replace ```:channel_namespace``` ```:service_name``` ```:author_name``` ```:author_username``` ```:author_website``` ```:author_email``` ```:package_name``` ```:package_description``` ```:style_ci_id``` ```:sensio_labs_id``` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md), [composer.json](composer.json) and other files, then delete this line.
-**Tip:** Use "Find in Path/Files" in your code editor to find these keywords within the package directory and replace all occurences with your specified term.
-
-This is where your description should go. Add a little code example so build can understand real quick how the package can be used. Try and limit it to a paragraph or two.
-
-
+[![Packagist Downloads](https://img.shields.io/packagist/dt/mirvan/ippanel?style=for-the-badge)](https://packagist.org/packages/mirvan/ippanel)
+[![Packagist Version](https://img.shields.io/packagist/v/mirvan/ippanel?style=for-the-badge)](https://packagist.org/packages/mirvan/ippanel)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge)](LICENSE.md)
 
 ## Contents
 
 - [Installation](#installation)
-	- [Setting up the :service_name service](#setting-up-the-:service_name-service)
+	- [Setting up the IPPanel service](#setting-up-the-ippanel-service)
 - [Usage](#usage)
 	- [Available Message methods](#available-message-methods)
 - [Changelog](#changelog)
-- [Testing](#testing)
 - [Security](#security)
 - [Contributing](#contributing)
 - [Credits](#credits)
@@ -36,33 +19,98 @@ This is where your description should go. Add a little code example so build can
 
 ## Installation
 
-Please also include the steps for any third-party service setup that's required for this package.
+You can install the package via composer:
+``` bash
+$ composer require mirvan/ippanel
+```
 
-### Setting up the :service_name service
 
-Optionally include a few steps how users can set up the service.
-
+### Setting up the IPPanel service
+You need to set your api key in `config/services.php`
+```php
+"ippanel"   => [
+    'api_key'  =>  'API_KEY_SECRET',
+],
+```
 ## Usage
+You can set Reference in your model
+``` php
+public function routeNotificationForIPPanel()
+{
+    return '09121234567';
+}
+```
 
-Some code examples, make it clear how to use the package
+You can set Originator in your model
+``` php
+public function ippanelOriginator()
+{
+    return '+983000505';
+}
+```
+
+Set channel in notification class
+``` php
+use Mirvan\IPPanel\IPPanelChannel;
+
+public function via($notifiable)
+{
+    return [IPPanelChannel::class];
+}
+```
+For send normal message
+``` php
+use Mirvan\IPPanel\IPPanelMessage;
+
+ public function toIPPanel($notifiable)
+{
+    return (new IPPanelMessage)
+        ->reference('09121231212')
+        ->originator('+983000505')
+        ->body('message');
+}
+```
+For pattern message
+``` php
+use Mirvan\IPPanel\IPPanelMessage;
+
+ public function toIPPanel($notifiable)
+{
+    return (new IPPanelMessage)
+        ->reference('09121231212')
+        ->originator('+983000505')
+        ->pattern('pattern_code')
+        ->variable('variable-name','1234');
+}
+```
+Remember: `reference()` and `originator()` is overwrite  `routeNotificationForIPPanel()` and `ippanelOriginator()`
+``` php
+return (new IPPanelMessage)
+    ->originator('+983000505')
+    ->reference('09121231212')
+    ->body('message');
+```
 
 ### Available Message methods
 
-A list of all available options
+- `originator('')`: Accepts a string value between 1 and 11 characters, used as the message sender name. This will overwrite `ippanelOriginator()`
+- `reference('')`: Accepts a string value for your message reference. This information will be returned in a status report so you can match the message and it's status. Restrictions: 1 - 32 alphanumeric characters. This will overwrite `routeNotificationForIPPanel()`
+
+Available options for **Normal Message**
+- `body('')`: Accepts a string value for the message body.
+
+Available options for **Pattern Message**
+- `pattern('')`: Accepts a string value for the pattern code.
+- `variable('name','value')`: Accepts an string for variable name and another string for variable value
+- `variables([])`: Accepts an array for variables 
 
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
-## Testing
-
-``` bash
-$ composer test
-```
-
 ## Security
 
-If you discover any security related issues, please email :author_email instead of using the issue tracker.
+If you discover any security related issues, please email me@mirvan.ir instead of using the issue tracker.
 
 ## Contributing
 
@@ -70,7 +118,8 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [MirVan](https://github.com/MirvanGh)
+- [MVHost](https://sms.mvhost.ir)
 - [All Contributors](../../contributors)
 
 ## License
