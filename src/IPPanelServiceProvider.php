@@ -3,7 +3,7 @@
 namespace Mirvan\IPPanel;
 
 use Illuminate\Support\ServiceProvider;
-use NotificationChannels\IPPanel\Exceptions\InvalidConfiguration;
+use Mirvan\IPPanel\Exceptions\InvalidConfiguration;
 
 class IPPanelServiceProvider extends ServiceProvider
 {
