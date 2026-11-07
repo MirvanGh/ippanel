@@ -2,7 +2,7 @@
 
 namespace Mirvan\IPPanel;
 
-use IPPanel\Client;
+use Ippanel\Client;
 
 class IPPanel extends Client
 {
